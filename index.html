@@ -19,13 +19,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             overflow-x: hidden;
             position: relative;
             padding: 20px;
         }
 
-        /*ব্যাকগ্রাউন্ডে ভাসমান হার্ট অ্যানিমেশন */
+        /* ব্যাকগ্রাউন্ডে ভাসমান হার্ট অ্যানিমেশন */
         .bg-hearts {
             position: fixed;
             top: 0;
@@ -50,7 +50,7 @@
             100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* স্ক্রিনের উপরে ডান কোণায় ইউনিক ও গ্লাস-লুক ক্রিয়েটর ব্যাজ */
+        /* স্ক্রিনের উপরে ডান কোণায় ইউনিক ক্রিয়েটর ব্যাজ */
         .creator-badge {
             position: fixed;
             top: 15px;
@@ -67,6 +67,7 @@
             box-shadow: 0 8px 20px rgba(255, 42, 95, 0.15);
             z-index: 100;
             transition: all 0.3s ease;
+            text-decoration: none; /* লিংকের নিচের দাগ সরানোর জন্য */
         }
 
         .creator-badge img {
@@ -96,7 +97,7 @@
             text-align: center;
             box-shadow: 0 20px 40px rgba(216, 27, 96, 0.15);
             z-index: 10;
-            margin-top: 20px;
+            margin-top: 50px;
             margin-bottom: 20px;
         }
 
@@ -219,18 +220,9 @@
             z-index: 50;
         }
 
-        #btn-yes {
-            background-color: #ff4d4d;
-        }
-
-        #btn-no {
-            background-color: #4caf50;
-        }
-
-        #btn-no:hover {
-            transform: scale(1.1);
-            background-color: #45a049;
-        }
+        #btn-yes { background-color: #ff4d4d; }
+        #btn-no { background-color: #4caf50; }
+        #btn-no:hover { transform: scale(1.1); background-color: #45a049; }
 
         /* ফাইনাল রোমান্টিক মেসেজ */
         #final-love-msg {
@@ -248,18 +240,14 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* একদম শেষের স্পন্সর ফুটার */
-        .sponsor-footer {
-            margin-top: auto;
-            padding: 20px 10px;
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #b71c1c;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(5px);
+        /* একদম শেষের ছোট ও একপাশে থাকা ফুটার */
+        .side-footer {
             width: 100%;
-            border-radius: 10px;
+            text-align: right;
+            padding: 10px 20px;
+            font-size: 11px;
+            color: #777;
+            opacity: 0.85;
             z-index: 10;
         }
 
@@ -275,24 +263,21 @@
     <!-- ব্যাকগ্রাউন্ডের ভাসমান লাভ ইমোজি -->
     <div class="bg-hearts" id="bg-hearts"></div>
 
-    <!-- স্ক্রিনের উপর কোণায় ইউনিক ক্রিয়েটর ব্যাজ -->
-    <div class="creator-badge">
+    <!-- স্ক্রিনের উপর কোণায় ইউনিক ক্রিয়েটর ব্যাজ (ফেসবুক লিংক সহ) -->
+    <a href="https://www.facebook.com/share/19Zs3nZ3dA/" target="_blank" class="creator-badge">
         <img src="logo.png" alt="Logo" onerror="this.src='https://api.iconify.design/fluent-emoji:sparkles.svg'">
         <span class="creator-text">Created by <b style="color: #ff2a5f;">Sofiul Azam Sunny</b> ✨</span>
-    </div>
+    </a>
 
     <!-- মূল কার্ড -->
     <div class="card">
         <h1>অনেক রাগ করেছো? 🥺</h1>
         <p>রাগ কমাতে নিচের বাটনটাতে একটা ক্লিক করেই দেখো...😅</p>
         
-        <!-- ব্রোকেন হার্ট বাটন -->
         <button id="main-btn" class="btn-main" onclick="startMagic()">Click Here 💔</button>
         
-        <!-- সরি প্রিন্ট হওয়ার জায়গা -->
         <div id="sorry-container"></div>
 
-        <!-- 500 সরি শেষ হওয়ার পর নতুন অপশন -->
         <div id="interactive-section">
             <h2 class="question-text">এখনো কি রাগ করে আছো? 🥺</h2>
             <div class="interactive-btns">
@@ -301,21 +286,19 @@
             </div>
         </div>
 
-        <!-- না চাপ দেওয়ার পর ফাইনাল মেসেজ -->
-        <div id="final-love-msg">আই লাভ ইউ সোনা ❤️✨</div>
-    </div>
-
-    <!-- একদম শেষে স্পন্সর ট্যাগ -->
-    <div class="sponsor-footer">
-        <div style="font-size: 11px; color: #888; text-align: right; padding: 5px 15px; opacity: 0.8;">
-  Sponsored & Created by Sofiul Azam Sunny ✨ <br>
-  <span style="font-style: italic; font-size: 10px;">Miss You the Elusive....</span>
+        <div id="final-love-msg">
+    আই লাভ ইউ মিস ❤️<br>
+    <span style="font-size: 22px; display: block; margin-top: 10px; color: #d81b60;">সারা জীবন শুধু তোমাকেই ভালোবাসবো রে(Committed to me) 😅</span>
         </div>
-    
+        
+
+    <!-- একপাশে ছোট করে স্পন্সর ও নতুন লাইন -->
+    <div class="side-footer">
+        Sponsored & Created by <b style="color: #ff2a5f;">Sofiul Azam Sunny</b> ✨<br>
+        <span style="font-style: italic; font-size: 10px; color: #888; font-weight: 600;">Miss You the Elusive И... 🥀</span>
     </div>
 
     <script>
-        // ব্যাকগ্রাউন্ডে লাভ ইমোজি তৈরি করার ফাংশন
         function createBgHearts() {
             const container = document.getElementById('bg-hearts');
             const hearts = ['❤️', '💖', '💕', '💗', '🥺', '✨'];
@@ -332,14 +315,12 @@
         }
         createBgHearts();
 
-        // ম্যাজিক শুরু হওয়ার ফাংশন
         function startMagic() {
             const mainBtn = document.getElementById('main-btn');
             const container = document.getElementById('sorry-container');
             
-            // ব্রোকেন হার্ট পাল্টে ফুল হার্ট হয়ে যাবে
             mainBtn.innerHTML = "Click Here ❤️";
-            mainBtn.disabled = true; // বাটন লক করে দেওয়া হলো যেন আর ক্লিক না করতে পারে
+            mainBtn.disabled = true;
             
             container.style.display = "flex";
             container.innerHTML = ""; 
@@ -350,7 +331,6 @@
             const interval = setInterval(() => {
                 if (count >= totalSorry) {
                     clearInterval(interval);
-                    // ৫০০ বার শেষ হলে প্রশ্ন সেকশন দেখাবে
                     document.getElementById('interactive-section').style.display = "block";
                     return;
                 }
@@ -359,21 +339,15 @@
                 span.innerText = "Sorry 🥺 ";
                 container.appendChild(span);
                 
-                // অটো স্ক্রোল ডাউন
                 container.scrollTop = container.scrollHeight;
-                
                 count++;
-            }, 10); // অ্যানিমেশন দ্রুত করার জন্য সময় ১০ms করে দিয়েছি
+            }, 10);
         }
 
-        // 'হ্যাঁ' বাটনের দৌড় দেওয়ার ফাংশন
         function runAway() {
             const btnYes = document.getElementById('btn-yes');
-            
-            // বাটনটিকে স্ক্রিনের যেকোনো জায়গায় ফিক্সড করে দেওয়া
             btnYes.style.position = 'fixed';
             
-            // স্ক্রিনের সাইজ অনুযায়ী র‍্যান্ডম পজিশন তৈরি
             const maxX = window.innerWidth - btnYes.offsetWidth - 20;
             const maxY = window.innerHeight - btnYes.offsetHeight - 20;
             
@@ -384,7 +358,6 @@
             btnYes.style.top = randomY + 'px';
         }
 
-        // 'না' চাপ দিলে যা হবে
         function sheSaidNo() {
             document.getElementById('interactive-section').style.display = 'none';
             document.getElementById('final-love-msg').style.display = 'block';
