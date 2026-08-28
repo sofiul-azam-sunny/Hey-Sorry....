@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorry Box | Created by Sofiul Azam Sunny</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #feada6 100%);
+            font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* ব্যাকগ্রাউন্ডে ভাসমান হার্ট অ্যানিমেশন */
+        .bg-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-heart {
+            position: absolute;
+            bottom: -10%;
+            font-size: 22px;
+            animation: floatUp 8s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* স্ক্রিনের উপরে ডান কোণায় ইউনিক ও গ্লাস-লুক ক্রিয়েটর ব্যাজ */
+        .creator-badge {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            padding: 8px 16px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(255, 42, 95, 0.15);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .creator-badge img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ff2a5f;
+        }
+
+        .creator-badge .creator-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: #d81b60;
+        }
+
+        /* মেইন কার্ড (Glassmorphism Effect) */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 28px;
+            padding: 40px 30px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(216, 27, 96, 0.15);
+            z-index: 10;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: #555;
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        /* মেইন সরি বাটন */
+        .btn-main {
+            padding: 16px 36px;
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff4d4d, #ff2a5f);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 42, 95, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .btn-main:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 42, 95, 0.6);
+        }
+
+        .btn-main:disabled {
+            cursor: not-allowed;
+            animation: none;
+            background: #ff7b93;
+            box-shadow: none;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.6); }
+            70% { box-shadow: 0 0 0 18px rgba(255, 77, 77, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
+        }
+
+        /* সরি কন্টেইনার */
+        #sorry-container {
+            margin-top: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding: 15px;
+            border-radius: 18px;
+            background: rgba(255, 240, 245, 0.6);
+            border: 1px dashed rgba(255, 77, 77, 0.3);
+            display: none;
+        }
+
+        #sorry-container::-webkit-scrollbar { width: 6px; }
+        #sorry-container::-webkit-scrollbar-thumb { background: #ff80ab; border-radius: 10px; }
+
+        .sorry-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #e91e63;
+            background: #ffffff;
+            padding: 6px 12px;
+            border-radius: 15px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+            display: inline-block;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* ইন্টারেক্টিভ প্রশ্ন সেকশন */
+        #interactive-section {
+            display: none;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px dashed rgba(255, 77, 77, 0.2);
+            animation: fadeIn 1s ease-in;
+        }
+
+        .question-text {
+            color: #d81b60;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .interactive-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            min-height: 60px;
+        }
+
+        .btn-choice {
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: 0.2s;
+            z-index: 50;
+        }
+
+        #btn-yes {
+            background-color: #ff4d4d;
+        }
+
+        #btn-no {
+            background-color: #4caf50;
+        }
+
+        #btn-no:hover {
+            transform: scale(1.1);
+            background-color: #45a049;
+        }
+
+        /* ফাইনাল রোমান্টিক মেসেজ */
+        #final-love-msg {
+            display: none;
+            margin-top: 20px;
+            font-size: 32px;
+            font-weight: 700;
+            color: #e91e63;
+            animation: zoomIn 0.6s ease-out;
+            text-shadow: 2px 2px 10px rgba(233, 30, 99, 0.3);
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* একদম শেষের স্পন্সর ফুটার */
+        .sponsor-footer {
+            margin-top: auto;
+            padding: 20px 10px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 700;
+            color: #b71c1c;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+            width: 100%;
+            border-radius: 10px;
+            z-index: 10;
+        }
+
+        @media (max-width: 480px) {
+            .creator-badge { top: 10px; right: 10px; padding: 6px 12px; }
+            .card { padding: 30px 18px; }
+            h1 { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ব্যাকগ্রাউন্ডের ভাসমান লাভ ইমোজি -->
+    <div class="bg-hearts" id="bg-hearts"></div>
+
+    <!-- স্ক্রিনের উপর কোণায় ইউনিক ক্রিয়েটর ব্যাজ -->
+    <div class="creator-badge">
+        <img src="logo.png" alt="Logo" onerror="this.src='https://api.iconify.design/fluent-emoji:sparkles.svg'">
+        <span class="creator-text">Created by <b style="color: #ff2a5f;">Sofiul Azam Sunny</b> ✨</span>
+    </div>
+
+    <!-- মূল কার্ড -->
+    <div class="card">
+        <h1>অনেক রাগ করেছো? 🥺</h1>
+        <p>রাগ কমাতে নিচের বাটনটাতে একটা ক্লিক করেই দেখো...😅</p>
+        
+        <!-- ব্রোকেন হার্ট বাটন -->
+        <button id="main-btn" class="btn-main" onclick="startMagic()">Click Here 💔</button>
+        
+        <!-- সরি প্রিন্ট হওয়ার জায়গা -->
+        <div id="sorry-container"></div>
+
+        <!-- 500 সরি শেষ হওয়ার পর নতুন অপশন -->
+        <div id="interactive-section">
+            <h2 class="question-text">এখনো কি রাগ করে আছো? 🥺</h2>
+            <div class="interactive-btns">
+                <button id="btn-yes" class="btn-choice" onmouseover="runAway()" onclick="runAway()">হ্যাঁ</button>
+                <button id="btn-no" class="btn-choice" onclick="sheSaidNo()">না</button>
+            </div>
+        </div>
+
+        <!-- না চাপ দেওয়ার পর ফাইনাল মেসেজ -->
+        <div id="final-love-msg">আই লাভ ইউ সোনা ❤️✨</div>
+    </div>
+
+    <!-- একদম শেষে স্পন্সর ট্যাগ -->
+    <div class="sponsor-footer">
+        Sponsored & Created by <span style="color: #ff2a5f;">Sofiul Azam Sunny</span> ✨
+    </div>
+
+    <script>
+        // ব্যাকগ্রাউন্ডে লাভ ইমোজি তৈরি করার ফাংশন
+        function createBgHearts() {
+            const container = document.getElementById('bg-hearts');
+            const hearts = ['❤️', '💖', '💕', '💗', '🥺', '✨'];
+            for (let i = 0; i < 25; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'bg-heart';
+                heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.animationDelay = (Math.random() * 5) + 's';
+                heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                container.appendChild(heart);
+            }
+        }
+        createBgHearts();
+
+        // ম্যাজিক শুরু হওয়ার ফাংশন
+        function startMagic() {
+            const mainBtn = document.getElementById('main-btn');
+            const container = document.getElementById('sorry-container');
+            
+            // ব্রোকেন হার্ট পাল্টে ফুল হার্ট হয়ে যাবে
+            mainBtn.innerHTML = "Click Here ❤️";
+            mainBtn.disabled = true; // বাটন লক করে দেওয়া হলো যেন আর ক্লিক না করতে পারে
+            
+            container.style.display = "flex";
+            container.innerHTML = ""; 
+            
+            let count = 0;
+            const totalSorry = 500;
+
+            const interval = setInterval(() => {
+                if (count >= totalSorry) {
+                    clearInterval(interval);
+                    // ৫০০ বার শেষ হলে প্রশ্ন সেকশন দেখাবে
+                    document.getElementById('interactive-section').style.display = "block";
+                    return;
+                }
+                const span = document.createElement('span');
+                span.className = 'sorry-text';
+                span.innerText = "Sorry 🥺 ";
+                container.appendChild(span);
+                
+                // অটো স্ক্রোল ডাউন
+                container.scrollTop = container.scrollHeight;
+                
+                count++;
+            }, 10); // অ্যানিমেশন দ্রুত করার জন্য সময় ১০ms করে দিয়েছি
+        }
+
+        // 'হ্যাঁ' বাটনের দৌড় দেওয়ার ফাংশন
+        function runAway() {
+            const btnYes = document.getElementById('btn-yes');
+            
+            // বাটনটিকে স্ক্রিনের যেকোনো জায়গায় ফিক্সড করে দেওয়া
+            btnYes.style.position = 'fixed';
+            
+            // স্ক্রিনের সাইজ অনুযায়ী র‍্যান্ডম পজিশন তৈরি
+            const maxX = window.innerWidth - btnYes.offsetWidth - 20;
+            const maxY = window.innerHeight - btnYes.offsetHeight - 20;
+            
+            const randomX = Math.max(10, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(10, Math.floor(Math.random() * maxY));
+            
+            btnYes.style.left = randomX + 'px';
+            btnYes.style.top = randomY + 'px';
+        }
+
+        // 'না' চাপ দিলে যা হবে
+        function sheSaidNo() {
+            document.getElementById('interactive-section').style.display = 'none';
+            document.getElementById('final-love-msg').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
