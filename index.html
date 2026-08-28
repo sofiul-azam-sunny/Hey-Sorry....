@@ -19,13 +19,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center; 
             overflow-x: hidden;
             position: relative;
             padding: 20px;
+            padding-bottom: 70px; 
         }
 
-        /* ব্যাকগ্রাউন্ডে ভাসমান হার্ট অ্যানিমেশন */
+        /* ব্যাকগ্রাউন্ডে ভাসমান অ্যানিমেশন */
         .bg-hearts {
             position: fixed;
             top: 0;
@@ -40,9 +41,28 @@
         .bg-heart {
             position: absolute;
             bottom: -10%;
-            font-size: 22px;
             animation: floatUp 8s linear infinite;
-            opacity: 0.6;
+            opacity: 0.8;
+        }
+
+        /* ফাটা লাল N (উল্টা) - এবার স্পষ্ট বোঝা যাবে */
+        .broken-red {
+            background: linear-gradient(25deg, #e91e63 48%, transparent 49%, transparent 51%, #e91e63 52%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-weight: 800;
+            text-shadow: 1px 1px 2px rgba(233, 30, 99, 0.2);
+        }
+
+        /* ফাটা কালো N (উল্টা) - এবার স্পষ্ট বোঝা যাবে */
+        .broken-black {
+            background: linear-gradient(-25deg, #222222 48%, transparent 49%, transparent 51%, #222222 52%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-weight: 800;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         @keyframes floatUp {
@@ -67,7 +87,7 @@
             box-shadow: 0 8px 20px rgba(255, 42, 95, 0.15);
             z-index: 100;
             transition: all 0.3s ease;
-            text-decoration: none; /* লিংকের নিচের দাগ সরানোর জন্য */
+            text-decoration: none;
         }
 
         .creator-badge img {
@@ -84,7 +104,7 @@
             color: #d81b60;
         }
 
-        /* মেইন কার্ড (Glassmorphism Effect) */
+        /* মেইন কার্ড */
         .card {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(16px);
@@ -97,8 +117,6 @@
             text-align: center;
             box-shadow: 0 20px 40px rgba(216, 27, 96, 0.15);
             z-index: 10;
-            margin-top: 50px;
-            margin-bottom: 20px;
         }
 
         h1 {
@@ -228,11 +246,12 @@
         #final-love-msg {
             display: none;
             margin-top: 20px;
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 700;
             color: #e91e63;
             animation: zoomIn 0.6s ease-out;
             text-shadow: 2px 2px 10px rgba(233, 30, 99, 0.3);
+            line-height: 1.4;
         }
 
         @keyframes zoomIn {
@@ -240,11 +259,14 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* একদম শেষের ছোট ও একপাশে থাকা ফুটার */
+        /* একদম শেষের ফুটার */
         .side-footer {
+            position: absolute;
+            bottom: 15px;
+            right: 0;
             width: 100%;
+            padding-right: 20px;
             text-align: right;
-            padding: 10px 20px;
             font-size: 11px;
             color: #777;
             opacity: 0.85;
@@ -253,14 +275,14 @@
 
         @media (max-width: 480px) {
             .creator-badge { top: 10px; right: 10px; padding: 6px 12px; }
-            .card { padding: 30px 18px; }
+            .card { padding: 30px 18px; margin-top: 40px; }
             h1 { font-size: 24px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ব্যাকগ্রাউন্ডের ভাসমান লাভ ইমোজি -->
+    <!-- ব্যাকগ্রাউন্ডের ভাসমান লাভ ইমোজি ও তোমার লুকানো অক্ষর 'И' -->
     <div class="bg-hearts" id="bg-hearts"></div>
 
     <!-- স্ক্রিনের উপর কোণায় ইউনিক ক্রিয়েটর ব্যাজ (ফেসবুক লিংক সহ) -->
@@ -287,12 +309,12 @@
         </div>
 
         <div id="final-love-msg">
-    আই লাভ ইউ মিস ❤️<br>
-    <span style="font-size: 22px; display: block; margin-top: 10px; color: #d81b60;">সারা জীবন শুধু তোমাকেই ভালোবাসবো রে(Committed to me) 😅</span>
+            আই লাভ ইউ মিস ❤️<br>
+            <span style="font-size: 22px; display: block; margin-top: 10px; color: #d81b60;">সারা জীবন শুধু তোমাকেই ভালোবাসি রে 😅</span>
         </div>
-        
+    </div>
 
-    <!-- একপাশে ছোট করে স্পন্সর ও নতুন লাইন -->
+    <!-- একদম নিচে থাকা স্পন্সর টেক্সট -->
     <div class="side-footer">
         Sponsored & Created by <b style="color: #ff2a5f;">Sofiul Azam Sunny</b> ✨<br>
         <span style="font-style: italic; font-size: 10px; color: #888; font-weight: 600;">Miss You the Elusive И... 🥀</span>
@@ -301,15 +323,31 @@
     <script>
         function createBgHearts() {
             const container = document.getElementById('bg-hearts');
-            const hearts = ['❤️', '💖', '💕', '💗', '🥺', '✨'];
-            for (let i = 0; i < 25; i++) {
+            const elements = [
+                { text: '❤️', class: 'emoji' },
+                { text: '💖', class: 'emoji' },
+                { text: '💕', class: 'emoji' },
+                { text: '💗', class: 'emoji' },
+                { text: '🥺', class: 'emoji' },
+                { text: '🖤', class: 'emoji' },
+                { text: '🖤', class: 'emoji' },
+                { text: 'И', class: 'broken-red' },
+                { text: 'И', class: 'broken-black' }
+
+            ];
+            
+            for (let i = 0; i < 35; i++) { 
+                const el = elements[Math.floor(Math.random() * elements.length)];
                 const heart = document.createElement('div');
-                heart.className = 'bg-heart';
-                heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.className = 'bg-heart ' + el.class;
+                heart.innerText = el.text;
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.animationDuration = (Math.random() * 5 + 6) + 's';
                 heart.style.animationDelay = (Math.random() * 5) + 's';
-                heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                
+                const size = Math.random() * 18 + 16;
+                heart.style.fontSize = size + 'px';
+                
                 container.appendChild(heart);
             }
         }
@@ -366,3 +404,4 @@
 
 </body>
 </html>
+
